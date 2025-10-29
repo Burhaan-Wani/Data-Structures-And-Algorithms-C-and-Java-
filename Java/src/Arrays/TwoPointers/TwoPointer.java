@@ -1,8 +1,8 @@
-package arrays.TwoPointer;
+package Arrays.TwoPointers;
 
 import java.util.Arrays;
 
-public class Pointers {
+public class TwoPointer {
     public static void main(String[] args) {
         // removeDuplicateFromSortedAray();
         sortZeroesAndOnes();

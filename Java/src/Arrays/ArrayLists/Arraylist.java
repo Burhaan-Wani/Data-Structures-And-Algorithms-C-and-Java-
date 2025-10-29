@@ -1,8 +1,8 @@
-package arrays.arraylist;
+package Arrays.ArrayLists;
 
 import java.util.ArrayList;
 
-public class ArrayListProblems {
+public class Arraylist {
     public static void main(String[] args) {
         // Both arrays are sorted
         int[] arr1 = { 5, 7, 8 };

@@ -1,8 +1,8 @@
-package arrays.twoDArrays;
+package Arrays.TwoDArrays;
 
 import java.util.ArrayList;
 
-public class TwoDArrays {
+public class TwoDArray {
     public static void main(String[] args) {
         int[][] one = {
                 { 1, 2, 3 },

@@ -1,8 +1,8 @@
-package Pattern;
+package Patterns;
 
 import java.util.Scanner;
 
-public class Patterns {
+public class Pattern {
     public static void main(String[] args) {
         System.out.print("Check for how many test cases: ");
         try (Scanner scn = new Scanner(System.in)) {

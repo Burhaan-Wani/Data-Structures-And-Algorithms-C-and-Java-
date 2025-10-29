@@ -1,6 +1,6 @@
-package arrays;
+package Arrays;
 
-public class ArrayBasics {
+public class Array {
     public static void main(String[] args) {
         // Basics syntax of arrays
         // Initialization and declaration in one line

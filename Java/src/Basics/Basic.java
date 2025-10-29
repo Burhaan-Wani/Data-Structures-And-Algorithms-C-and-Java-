@@ -1,6 +1,6 @@
-package Basic;
+package Basics;
 
-public class Basics {
+public class Basic {
     public static void main(String[] args) {
     }
 }
