@@ -11,36 +11,11 @@ public class Array {
         arr[3] = 4;
         arr[4] = 5;
 
-        // Looping through an array
-        // for (int i = 0; i < arr.length; i++) {
-        // System.out.print(arr[i]);
-        // }
-        // System.out.println();
-
-        // Enhanced for-loop
         for (int val : arr) {
             System.out.print(val + " ");
         }
         System.out.println();
-        // swapArrayElements(arr, 0, arr.length - 1);
-        // System.out.println();
-        // for (int val : arr) {
-        // System.out.print(val + " ");
-        // }
 
-        // System.out.println();
-        // reverseAnArray(arr, 0, arr.length - 1);
-        // for (int val : arr) {
-        // System.out.print(val + " ");
-        // }
-
-        // System.out.println(maxArrayElement(arr));
-        // System.out.println(minArrayElement(arr));
-
-        rotateArrayKTimes(arr, 3);
-        for (int val : arr) {
-            System.out.print(val + " ");
-        }
     }
 
     public static void swapArrayElements(int[] arr, int i, int j) {
@@ -90,5 +65,22 @@ public class Array {
             }
             arr[0] = temp;
         }
+    }
+
+    public static int[] secondLargestElementInArray(int[] arr) {
+
+        int largest = arr[0];
+        int secondLargest = Integer.MIN_VALUE;
+
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] > largest) {
+                secondLargest = largest;
+                largest = arr[i];
+            } else if (arr[i] < largest && arr[i] > secondLargest) {
+                secondLargest = arr[i];
+            }
+        }
+
+        return new int[] { largest, secondLargest };
     }
 }
