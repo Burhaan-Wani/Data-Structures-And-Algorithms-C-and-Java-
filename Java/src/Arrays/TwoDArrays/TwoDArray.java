@@ -45,7 +45,8 @@ public class TwoDArray {
         }
     }
 
-    public static void transposeMatrix(int[][] arr) {
+    // using additional array
+    public static void transposeMatrix1(int[][] arr) {
         /**
          * 1,2,3 1,4,7
          * 4,5,6 2,5,8
@@ -64,6 +65,24 @@ public class TwoDArray {
         for (int[] val : result) {
             for (int el : val) {
                 System.out.print(el + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    // Inplace -> constant space
+    public static void transposeMatrix(int[][] matrix) {
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0 + i; j < matrix[i].length; j++) {
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = temp;
+            }
+        }
+
+        for (int[] res : matrix) {
+            for (int val : res) {
+                System.out.print(val + " ");
             }
             System.out.println();
         }

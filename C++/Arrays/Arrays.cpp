@@ -147,8 +147,76 @@ int removeDuplicatesFromSortedArray()
     return idx;
 }
 
+vector<int> runningSumOf1DArray(int arr[], int len)
+{
+    vector<int> vec(len);
+    vec[0] = arr[0];
+    for (int i = 1; i < len; i++)
+    {
+        vec[i] = vec[i - 1] + arr[i];
+    }
+
+    return vec;
+}
+
+vector<int> intersectionOfTwoArrays(int arr1[], int arr2[], int m, int n)
+{
+    int i = 0, j = 0;
+    vector<int> vec;
+    while (i < m && j < n)
+    {
+        if (arr1[i] < arr2[j])
+            i++;
+        else if (arr1[i] > arr2[j])
+            j++;
+        else
+        {
+            vec.push_back(arr1[i]);
+            i++;
+            j++;
+        }
+    }
+    return vec;
+}
+
+list<int> addTwoArrays(int arr1[], int arr2[], int m, int n)
+{
+    int carry = 0;
+    list<int> ls;
+    int i = m - 1, j = n - 1;
+
+    while (i >= 0 || j >= 0)
+    {
+        int sum = 0;
+        if (i >= 0)
+            sum += arr1[i];
+        if (j >= 0)
+            sum += arr2[j];
+        sum += carry;
+        int rem = sum % 10;
+        carry = sum / 10;
+        ls.emplace_front(rem);
+        i--;
+        j--;
+    }
+    if (carry > 0)
+    {
+        ls.emplace_front(carry);
+    }
+    return ls;
+}
+
 int main()
 {
-    checkArrayIsSortedOrNot();
+    int arr1[] = {1, 2, 3};
+    int arr2[] = {9, 9, 3, 7};
+    int m = sizeof(arr1) / sizeof(arr1[0]);
+    int n = sizeof(arr2) / sizeof(arr2[0]);
+    list<int> res = addTwoArrays(arr1, arr2, m, n);
+
+    for (auto val : res)
+    {
+        cout << val << " ";
+    }
     return 0;
 }

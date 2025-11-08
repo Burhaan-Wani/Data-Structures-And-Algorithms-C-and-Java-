@@ -4,18 +4,12 @@ public class Array {
     public static void main(String[] args) {
         // Basics syntax of arrays
         // Initialization and declaration in one line
-        int[] arr = new int[5];
-        arr[0] = 1;
-        arr[1] = 2;
-        arr[2] = 3;
-        arr[3] = 4;
-        arr[4] = 5;
+        int[] arr = { 1, 2, 3, 4, 5 };
+        int[] res = runningSumOf1DArray(arr);
 
-        for (int val : arr) {
+        for (int val : res) {
             System.out.print(val + " ");
         }
-        System.out.println();
-
     }
 
     public static void swapArrayElements(int[] arr, int i, int j) {
@@ -82,5 +76,43 @@ public class Array {
         }
 
         return new int[] { largest, secondLargest };
+    }
+
+    public static void isSortedOrNot(int[] arr) {
+        boolean isSorted = true;
+
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] < arr[i - 1]) {
+                isSorted = false;
+            }
+        }
+
+        if (isSorted) {
+            System.out.println("Array is sorted");
+        } else {
+            System.out.println("Array is not sorted");
+        }
+    }
+
+    public static int[] runningSumOf1DArray(int[] arr) {
+        int[] result = new int[arr.length];
+        result[0] = arr[0];
+
+        for (int i = 1; i < arr.length; i++) {
+            result[i] = result[i - 1] + arr[i];
+        }
+        return result;
+    }
+
+    public static int removeDuplicatesFromSortedArray(int[] arr) {
+        int idx = 1;
+
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i - 1] != arr[i]) {
+                arr[idx] = arr[i];
+                idx += 1;
+            }
+        }
+        return idx;
     }
 }
