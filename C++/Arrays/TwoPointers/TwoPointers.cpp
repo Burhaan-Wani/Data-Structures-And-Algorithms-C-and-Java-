@@ -57,6 +57,25 @@ void nextPermutation(vector<int> &nums)
     reverse(nums, i);
 }
 
+vector<int> twoSum(vector<int> &vec, int target)
+{
+    int i = 0, j = vec.size() - 1;
+    while (i <= j)
+    {
+        if (vec[i] + vec[j] > target)
+        {
+            j--;
+        }
+        else if (vec[i] + vec[j] < target)
+            i++;
+        else
+        {
+            return {i + 1, j + 1};
+        }
+    }
+    return {-1, -1};
+}
+
 void reverse(vector<int> &nums, int i)
 {
     int j = nums.size() - 1;
