@@ -17,6 +17,29 @@ int largestElement()
     return largest;
 }
 
+void secondLargestElementInArray()
+{
+    // unsorted array
+    vector<int> v = {1, 3, 2, 4, 5, 7, 6};
+    int n = v.size();
+    int largest = v[0];
+    int secondLargest = INT_MIN;
+
+    for (int i = 1; i < n; i++)
+    {
+        if (v[i] > largest)
+        {
+            secondLargest = largest;
+            largest = v[i];
+        }
+        else if (v[i] < largest && v[i] > secondLargest)
+        {
+            secondLargest = v[i];
+        }
+    }
+    cout << largest << " " << secondLargest;
+}
+
 int smallestElement()
 {
     int arr[] = {1, 3, 4, 2, 5, 7, 6};
@@ -44,20 +67,21 @@ void swapTwoArrayElements()
     arr[j] = temp;
 }
 
-void reverseAnArray()
+void reverseAnArray(vector<int> &vec, int left, int right)
 {
-    int arr[] = {1, 3, 4, 2, 5, 7, 6};
-    int len = sizeof(arr) / sizeof(arr[0]);
+    int len = vec.size();
 
-    int i = 0, j = len - 1;
-    while (i <= j)
+    while (left < right)
     {
-        int temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
+        int temp = vec[left];
+        vec[left] = vec[right];
+        vec[right] = temp;
+        left++;
+        right--;
     }
 }
 
+// Method 1
 void rotateArrayKTimes()
 {
     vector<int> vec = {1, 2, 3, 4};
@@ -82,27 +106,14 @@ void rotateArrayKTimes()
     }
 }
 
-void secondLargestElementInArray()
+// Method 2 - by reversing array
+void rotateArray(vector<int> &nums, int k)
 {
-    // unsorted array
-    vector<int> v = {1, 3, 2, 4, 5, 7, 6};
-    int n = v.size();
-    int largest = v[0];
-    int secondLargest = INT_MIN;
-
-    for (int i = 1; i < n; i++)
-    {
-        if (v[i] > largest)
-        {
-            secondLargest = largest;
-            largest = v[i];
-        }
-        else if (v[i] < largest && v[i] > secondLargest)
-        {
-            secondLargest = v[i];
-        }
-    }
-    cout << largest << " " << secondLargest;
+    int len = nums.size();
+    k = k % len;
+    reverseAnArray(nums, 0, len - 1);
+    reverseAnArray(nums, 0, k - 1);
+    reverseAnArray(nums, k, len - 1);
 }
 
 void checkArrayIsSortedOrNot()
@@ -130,9 +141,10 @@ void checkArrayIsSortedOrNot()
     }
 }
 
+// Method 1
 int removeDuplicatesFromSortedArray()
 {
-    int arr[] = {0, 1, 1, 1, 1, 2, 2, 3, 3, 4};
+    int arr[] = {1, 2, 2, 3, 3, 4, 4};
     int n = sizeof(arr) / sizeof(arr[0]);
 
     int idx = 1;
@@ -145,6 +157,21 @@ int removeDuplicatesFromSortedArray()
         }
     }
     return idx;
+}
+
+// Method 2
+int removeDuplicatesInSortedArray(vector<int> &vec)
+{
+    int idx = 0;
+    for (int j = 0; j < vec.size(); j++)
+    {
+        if (vec[j] != vec[idx])
+        {
+            vec[idx + 1] = vec[j];
+            idx += 1;
+        }
+    }
+    return idx + 1;
 }
 
 vector<int> runningSumOf1DArray(int arr[], int len)
@@ -179,6 +206,52 @@ vector<int> intersectionOfTwoArrays(int arr1[], int arr2[], int m, int n)
     return vec;
 }
 
+vector<int> unionOfTwoArrays(vector<int> &v1, vector<int> &v2)
+{
+    int n1 = v1.size();
+    int n2 = v2.size();
+    int i = 0, j = 0;
+    vector<int> unionArr;
+
+    while (i < n1 && j < n2)
+    {
+        if (v1[i] <= v2[j])
+        {
+            if (unionArr.size() == 0 || unionArr.back() != v1[i])
+            {
+                unionArr.push_back(v1[i]);
+            }
+            i++;
+        }
+        else
+        {
+            if (unionArr.size() == 0 || unionArr.back() != v2[j])
+            {
+                unionArr.push_back(v2[j]);
+            }
+            j++;
+        }
+    }
+
+    while (i < n1)
+    {
+        if (unionArr.size() == 0 || unionArr.back() != v1[i])
+        {
+            unionArr.push_back(v1[i]);
+        }
+        i++;
+    }
+    while (j < n2)
+    {
+        if (unionArr.size() == 0 || unionArr.back() != v2[j])
+        {
+            unionArr.push_back(v2[j]);
+        }
+        j++;
+    }
+    return unionArr;
+}
+
 list<int> addTwoArrays(int arr1[], int arr2[], int m, int n)
 {
     int carry = 0;
@@ -206,15 +279,92 @@ list<int> addTwoArrays(int arr1[], int arr2[], int m, int n)
     return ls;
 }
 
+void leftRotateArrayByOnePlace(vector<int> &vec)
+{
+    int temp = vec[0];
+    for (int i = 1; i < vec.size(); i++)
+    {
+        vec[i - 1] = vec[i];
+    }
+    vec[vec.size() - 1] = temp;
+}
+
+// Method 1
+void putAllZeroesAtTheEnd(vector<int> &vec)
+{
+    int i = 0, j = vec.size() - 1;
+    while (j >= i)
+    {
+        if (vec[j] == 0)
+            j--;
+        else
+        {
+            int temp = vec[j];
+            vec[j] = vec[i];
+            vec[i] = temp;
+        }
+        i++;
+    }
+}
+
+// Method 2
+void moveZeroesToTheEnd(vector<int> &vec)
+{
+    int i = 0, idx = vec.size() - 1;
+    while (i <= idx)
+    {
+        if (vec[idx] == 0)
+            idx--;
+        else if (vec[i] == 0)
+        {
+            int temp = vec[i];
+            for (int j = i + 1; j <= idx; j++)
+            {
+                vec[j - 1] = vec[j];
+            }
+            vec[idx] = temp;
+            idx--;
+        }
+        else
+        {
+            i++;
+        }
+    }
+}
+
+// Method 3
+void moveZeroes(vector<int> &nums)
+{
+    int j = -1;
+    for (int i = 0; i < nums.size(); i++)
+    {
+        if (nums[i] == 0)
+        {
+            j = i;
+            break;
+        }
+    }
+
+    if (j == -1)
+        return;
+    for (int i = j + 1; i < nums.size(); i++)
+    {
+        if (nums[i] != 0)
+        {
+            int temp = nums[i];
+            nums[i] = nums[j];
+            nums[j] = temp;
+            j++;
+        }
+    }
+}
+
 int main()
 {
-    int arr1[] = {1, 2, 3};
-    int arr2[] = {9, 9, 3, 7};
-    int m = sizeof(arr1) / sizeof(arr1[0]);
-    int n = sizeof(arr2) / sizeof(arr2[0]);
-    list<int> res = addTwoArrays(arr1, arr2, m, n);
-
-    for (auto val : res)
+    vector<int> vec1 = {1, 2, 3, 3, 4, 5, 5};
+    vector<int> vec2 = {2, 3, 4, 4, 5, 6, 7};
+    vector<int> vec = unionOfTwoArrays(vec1, vec2);
+    for (auto val : vec)
     {
         cout << val << " ";
     }
