@@ -163,7 +163,7 @@ int removeDuplicatesFromSortedArray()
 int removeDuplicatesInSortedArray(vector<int> &vec)
 {
     int idx = 0;
-    for (int j = 0; j < vec.size(); j++)
+    for (int j = 1; j < vec.size(); j++)
     {
         if (vec[j] != vec[idx])
         {
@@ -289,7 +289,7 @@ void leftRotateArrayByOnePlace(vector<int> &vec)
     vec[vec.size() - 1] = temp;
 }
 
-// Method 1
+// Method 1 - This method does not maintain the relative order
 void putAllZeroesAtTheEnd(vector<int> &vec)
 {
     int i = 0, j = vec.size() - 1;
@@ -307,7 +307,7 @@ void putAllZeroesAtTheEnd(vector<int> &vec)
     }
 }
 
-// Method 2
+// Method 2 - Shifting array to left by ones, maintain relative order
 void moveZeroesToTheEnd(vector<int> &vec)
 {
     int i = 0, idx = vec.size() - 1;
@@ -332,7 +332,7 @@ void moveZeroesToTheEnd(vector<int> &vec)
     }
 }
 
-// Method 3
+// Method 3 - optimized
 void moveZeroes(vector<int> &nums)
 {
     int j = -1;
@@ -359,14 +359,99 @@ void moveZeroes(vector<int> &nums)
     }
 }
 
+// 268. Missing Number
+int missingNumber(vector<int> &nums)
+{
+    int xor1 = 0, xor2 = 0;
+    int n = nums.size();
+    for (int i = 0; i < n; i++)
+    {
+        xor2 = xor2 ^ nums[i];
+        xor1 = xor1 ^ i;
+    }
+    xor1 = xor1 ^ nums.size();
+    return xor1 ^ xor2;
+}
+
+// 485. Max Consecutive Ones
+int findMaxConsecutiveOnes(vector<int> &nums)
+{
+    int count = 0, maxOnes = 0;
+    for (int i = 0; i < nums.size(); i++)
+    {
+        if (nums[i] == 1)
+        {
+            count++;
+            if (count > maxOnes)
+            {
+                maxOnes = count;
+            }
+        }
+        else
+        {
+            count = 0;
+        }
+    }
+    return maxOnes;
+}
+
+// Find longest subarray with sum k
+// Works for both +ve & -ve values
+// Better Approach - Method 1
+int longestSubArraySum(vector<int> &a, int k)
+{
+    int maxlen = 0;
+    long long sum = 0;
+    map<long long, int> preSumMap;
+    for (int i = 0; i < a.size(); i++)
+    {
+        sum += a[i];
+        if (sum == k)
+            maxlen = max(maxlen, i + 1);
+
+        long long rem = sum - k;
+        if (preSumMap.find(rem) != preSumMap.end())
+        {
+            int len = i - preSumMap[rem];
+            maxlen = max(maxlen, len);
+        }
+        if (preSumMap.find(sum) == preSumMap.end())
+        {
+            preSumMap[sum] = i;
+        }
+    }
+    return maxlen;
+}
+
+// Optimized Approach - Method 2
+int longestSubArray(vector<int> &a, int k)
+{
+    int left = 0, right = 0;
+    long long sum = a[0];
+    int len = 0;
+    int n = a.size();
+    while (right < n)
+    {
+        while (left <= right && sum > k)
+        {
+            sum -= a[left++];
+        }
+        if (sum == k)
+        {
+            len = max(len, right - left + 1);
+        }
+        right++;
+        if (right < n)
+            sum += a[right];
+    }
+    return len;
+}
 int main()
 {
-    vector<int> vec1 = {1, 2, 3, 3, 4, 5, 5};
-    vector<int> vec2 = {2, 3, 4, 4, 5, 6, 7};
-    vector<int> vec = unionOfTwoArrays(vec1, vec2);
-    for (auto val : vec)
-    {
-        cout << val << " ";
-    }
+    unordered_map<int, int> mp;
+    // sum=1;
+    vector<int> v = {1, 2, 3, 1, 1, 1, 1};
+    int k = 3;
+    cout << longestSubArray(v, k);
     return 0;
 }
