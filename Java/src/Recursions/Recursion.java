@@ -155,17 +155,17 @@ public class Recursion {
     // -----------------------------------------
     public static int count = 0;
 
-    public static void fn(int i, int j, int m, int n, String str) {
+    public static void MazePath(int i, int j, int m, int n, String str) {
         if (i == m - 1 && j == n - 1) {
             count++;
             System.out.println(str);
             return;
         }
         if (j < n) {
-            fn(i, j + 1, m, n, str + 'R');
+            MazePath(i, j + 1, m, n, str + 'R');
         }
         if (i < m) {
-            fn(i + 1, j, m, n, str + 'D');
+            MazePath(i + 1, j, m, n, str + 'D');
         }
     }
 
